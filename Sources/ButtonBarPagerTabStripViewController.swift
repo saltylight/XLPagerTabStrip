@@ -56,6 +56,10 @@ public struct ButtonBarPagerTabStripSettings {
         public var buttonBarItemFont = UIFont.systemFont(ofSize: 18)
         public var buttonBarItemLeftRightMargin: CGFloat = 8
         public var buttonBarItemTitleColor: UIColor?
+        
+        public var bottomBorderHeight: CGFloat = 0 // bottomBorderHeight
+        public var bottomBorderColor: UIColor?
+        
         @available(*, deprecated: 7.0.0) public var buttonBarItemsShouldFillAvailiableWidth: Bool {
             set {
                 buttonBarItemsShouldFillAvailableWidth = newValue
@@ -123,6 +127,11 @@ open class ButtonBarPagerTabStripViewController: PagerTabStripViewController, Pa
                 flowLayout.scrollDirection = .horizontal
                 let buttonBarHeight = settings.style.buttonBarHeight ?? 44
                 let buttonBar = ButtonBarView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: buttonBarHeight), collectionViewLayout: flowLayout)
+            
+                let bottomBorderView = UIView(frame: CGRect(x: 0, y: buttonBar.frame.height - settings.style.bottomBorderHeight, width: buttonBar.frame.width, height: settings.style.bottomBorderHeight))
+                bottomBorderView.backgroundColor = settings.style.bottomBorderColor ?? .blue
+                buttonBar.addSubview(bottomBorderView)
+            
                 buttonBar.backgroundColor = .orange
                 buttonBar.selectedBar.backgroundColor = .black
                 buttonBar.autoresizingMask = .flexibleWidth
